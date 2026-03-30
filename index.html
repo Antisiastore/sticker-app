@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sticker Lucu 💜</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    background:#ffe6f2;
+    text-align:center;
+    font-family:'Baloo 2',cursive;
+    padding:20px;
+}
+
+.container{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+textarea{
+    width:90%;
+    min-height:100px;
+    border-radius:15px;
+    border:2px solid #d63384;
+    padding:15px;
+    font-size:16px;
+}
+
+input[type="color"]{
+    width:60px;
+    height:40px;
+    border:none;
+    margin-top:10px;
+}
+
+.sticker{
+    margin-top:20px;
+    background:#ffb6d9;
+    border-radius:30px;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+}
+
+.sticker img{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.text{
+    text-align:left;
+}
+
+.title{
+    font-size:20px;
+    font-weight:bold;
+    color:#a100ff;
+}
+
+.desc{
+    font-size:14px;
+}
+
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:15px;
+    background:#d63384;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>💜 Sticker Lucu Kamu</h2>
+
+<textarea id="input" placeholder="Tulis sesuatu..."></textarea><br>
+
+<input type="file" accept="image/*" onchange="loadImage(event)">
+<br>
+<input type="color" onchange="changeBG(this.value)">
+
+<br>
+<button onclick="updateSticker()">Buat Sticker</button>
+
+<div class="sticker" id="capture">
+<img id="avatar" src="https://i.ibb.co/2kR5zqH/girl.png">
+<div class="text">
+<div class="title" id="title">Nama Kamu</div>
+<div class="desc" id="desc">Tulis sesuatu...</div>
+</div>
+</div>
+
+<button onclick="downloadPNG()">Download Sticker</button>
+<button onclick="shareInfo()">Share ke WhatsApp</button>
+
+</div>
+
+<script>
+// LOAD FOTO
+function loadImage(event){
+    let reader = new FileReader();
+    reader.onload = function(){
+        document.getElementById("avatar").src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+// GANTI BG
+function changeBG(color){
+    document.getElementById("capture").style.background = color;
+}
+
+// UPDATE TEXT
+function updateSticker(){
+    let text = document.getElementById("input").value;
+
+    document.getElementById("desc").innerText = text || "Lagi santai 💜";
+    document.getElementById("title").innerText = "Sticker Aku";
+}
+
+// DOWNLOAD
+function downloadPNG(){
+    html2canvas(document.getElementById("capture")).then(canvas=>{
+        let link = document.createElement("a");
+        link.download = "sticker.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+
+// SHARE INFO (AMAN)
+function shareInfo(){
+    alert("📥 Download dulu stikernya ya, lalu kirim ke WhatsApp 😊");
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</body>
+</html>
